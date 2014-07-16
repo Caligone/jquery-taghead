@@ -1,0 +1,34 @@
+{
+	"name": "taghead",
+	"title": "jQuery TagHead",
+	"description": "A jQuery plugin to mix typhead and tags",
+	"keywords": [
+		"jquery",
+		"taghead",
+		"plugins"
+	],
+	"version": "3.3.4",
+	"author": {
+		"name": "Caligone",
+		"email": "caligone@gmx.fr",
+		"url": "https://github.com/Caligone"
+	},
+	"maintainers": [
+		{
+			"name": "Caligone",
+			"email": "caligone@gmx.fr",
+			"url": "https://github.com/Caligone"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT"
+		}
+	],
+	"bugs": "https://github.com/Caligone/jquery-taghead/issues",
+	"docs": "https://github.com/Caligone/jquery-taghead#readme",
+	"download": "https://github.com/Caligone/jquery-taghead/archive/master.zip",
+	"dependencies": {
+		"jquery": ">=1.4"
+	}
+}

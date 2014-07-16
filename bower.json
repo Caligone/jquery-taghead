@@ -1,18 +1,17 @@
 {
-	"name": "jquery-boilerplate",
-	"version": "3.3.4",
-	"homepage": "http://jqueryboilerplate.com",
+	"name": "jquery-taghead",
+	"version": "0.1.0",
 	"authors": [
-		"Zeno Rocha <hi@zenorocha.com>"
+		"Caligone <caligone@gmx.fr>"
 	],
-	"description": "A jump-start for jQuery plugins development.",
-	"main": "src/jquery.boilerplate.js",
+	"description": "A jQuery plugin to mix typhead and tags",
+	"main": "src/jquery.jquery-taghead.js",
 	"keywords": [
 		"jquery",
 		"plugin",
-		"boilerplate",
+		"taghead",
 		"jquery-plugin",
-		"jquery-boilerplate"
+		"jquery-taghead"
 	],
 	"license": "MIT"
 }

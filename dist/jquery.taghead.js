@@ -1,7 +1,7 @@
 /*
- *  jQuery Boilerplate - v3.3.4
+ *  jQuery Taghead - v3.3.4
  *  A jump-start for jQuery plugins development.
- *  http://jqueryboilerplate.com
+ *  http://jquerytaghead.com
  *
  *  Made by Zeno Rocha
  *  Under MIT License
@@ -20,7 +20,7 @@
 		// minified (especially when both are regularly referenced in your plugin).
 
 		// Create the defaults once
-		var pluginName = "defaultPluginName",
+		var pluginName = "taghead",
 				defaults = {
 				propertyName: "value"
 		};

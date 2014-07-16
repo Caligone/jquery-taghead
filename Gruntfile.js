@@ -54,7 +54,14 @@ module.exports = function(grunt) {
 					"dist/jquery.taghead.js": "src/jquery.taghead.coffee"
 				}
 			}
-		}
+		},
+
+		watch: {
+			scripts: {
+				files: ['src/**/*.coffee', ],
+				tasks: ["coffee", "uglify"],
+			},
+		},
 
 	});
 
@@ -62,8 +69,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-coffee");
+	grunt.loadNpmTasks("grunt-contrib-watch");
 
 	grunt.registerTask("default", ["jshint", "concat", "uglify"]);
+	grunt.registerTask("prod", ["coffee", "uglify"]);
 	grunt.registerTask("travis", ["jshint"]);
 
 };

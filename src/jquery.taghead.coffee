@@ -33,7 +33,6 @@ do ($ = jQuery, window, document) ->
 			@tags = []
 			@ids = []
 			@init()
-			console.log(@settings)
 
 		# Edit the DOM and Bind events
 		init: ->
@@ -46,9 +45,10 @@ do ($ = jQuery, window, document) ->
 			@input = $(@wrapper).find('.taghead-input')[0]
 			# Create and save the taggead-tag-list-wrapper
 			$(@wrapper).append("<span class='taghead-tag-list-wrapper #{@settings.style.tagListWrapperClass}'><ul class='taghead-tag-list #{@settings.style.tagListClass}'></ul></span>")
-			@list = $(@wrapper).find('.taghead-tag-list')[0]	
+			@list = $(@wrapper).find('.taghead-tag-list')[0]
 			
 			$(@element).hide()
+			$(@list).hide()
 
 			# Keydown event
 			$(@input).on('keyup', (event) =>
@@ -60,6 +60,8 @@ do ($ = jQuery, window, document) ->
 
 					@addTag($(@input).val(), $(@input).val())
 					$(@input).val('')
+					$(@list).empty()
+					$(@list).hide()
 				else 
 					if(event.keyCode == 8 && $(@input).val() == '')
 						@removeTag(@tags[@tags.length-1])
@@ -81,6 +83,7 @@ do ($ = jQuery, window, document) ->
 						# Empty the list and display the result
 						$(@list).empty()
 						$(@list).append("<li><a href='#' data-id='#{e[@settings.remote.storeData]}' class='taghead-tag-list-item #{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a></li>") for e in data
+						$(@list).show()
 					)
 			)
 
@@ -94,6 +97,9 @@ do ($ = jQuery, window, document) ->
 			# Validate a tag
 			$(@wrapper).on('click', "a.taghead-tag-list-item", (event) =>
 				@addTag($(event.target).text(), $(event.target).attr('data-id'))
+				$(@list).empty()
+				$(@list).hide()
+				$(@input).val('')
 			)
 
 
@@ -103,7 +109,7 @@ do ($ = jQuery, window, document) ->
 				return
 
 			# Create the DOM element
-			$(@wrapper).append("<span class='taghead-tag #{@settings.style.tagClass}' data-label='#{label}' data-id=#{id}>#{label}<a href='#' class='taghead-remove #{@settings.style.removeClass}'>X</a></span>")
+			$(@input).before("<span class='taghead-tag #{@settings.style.tagClass}' data-label='#{label}' data-id=#{id}>#{label}<a href='#' class='taghead-remove #{@settings.style.removeClass}'>X</a></span>")
 			
 			@tags.push(label)
 			@ids.push(id)

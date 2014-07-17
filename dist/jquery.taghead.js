@@ -36,7 +36,6 @@
         this.tags = [];
         this.ids = [];
         this.init();
-        console.log(this.settings);
       }
 
       Plugin.prototype.init = function() {
@@ -47,6 +46,7 @@
         $(this.wrapper).append("<span class='taghead-tag-list-wrapper " + this.settings.style.tagListWrapperClass + "'><ul class='taghead-tag-list " + this.settings.style.tagListClass + "'></ul></span>");
         this.list = $(this.wrapper).find('.taghead-tag-list')[0];
         $(this.element).hide();
+        $(this.list).hide();
         $(this.input).on('keyup', (function(_this) {
           return function(event) {
             var data;
@@ -56,6 +56,8 @@
               }
               _this.addTag($(_this.input).val(), $(_this.input).val());
               $(_this.input).val('');
+              $(_this.list).empty();
+              $(_this.list).hide();
             } else {
               if (event.keyCode === 8 && $(_this.input).val() === '') {
                 _this.removeTag(_this.tags[_this.tags.length - 1]);
@@ -72,14 +74,13 @@
                 url: _this.settings.remote.source,
                 data: data
               }).done(function(data) {
-                var e, _i, _len, _results;
+                var e, _i, _len;
                 $(_this.list).empty();
-                _results = [];
                 for (_i = 0, _len = data.length; _i < _len; _i++) {
                   e = data[_i];
-                  _results.push($(_this.list).append("<li><a href='#' data-id='" + e[_this.settings.remote.storeData] + "' class='taghead-tag-list-item " + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a></li>"));
+                  $(_this.list).append("<li><a href='#' data-id='" + e[_this.settings.remote.storeData] + "' class='taghead-tag-list-item " + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a></li>");
                 }
-                return _results;
+                return $(_this.list).show();
               });
             }
           };
@@ -93,7 +94,10 @@
         })(this));
         return $(this.wrapper).on('click', "a.taghead-tag-list-item", (function(_this) {
           return function(event) {
-            return _this.addTag($(event.target).text(), $(event.target).attr('data-id'));
+            _this.addTag($(event.target).text(), $(event.target).attr('data-id'));
+            $(_this.list).empty();
+            $(_this.list).hide();
+            return $(_this.input).val('');
           };
         })(this));
       };
@@ -102,7 +106,7 @@
         if (!this.settings.allowDuplicates && (this.tags.indexOf(label) > -1 || this.ids.indexOf(id) > -1)) {
           return;
         }
-        $(this.wrapper).append("<span class='taghead-tag " + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + ">" + label + "<a href='#' class='taghead-remove " + this.settings.style.removeClass + "'>X</a></span>");
+        $(this.input).before("<span class='taghead-tag " + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + ">" + label + "<a href='#' class='taghead-remove " + this.settings.style.removeClass + "'>X</a></span>");
         this.tags.push(label);
         this.ids.push(id);
         return $(this.element).val(this.ids.join(','));

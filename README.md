@@ -79,6 +79,7 @@
 
 ### ToDo List
 
+* Default value
 * Write a nice documentation
 * Unit testing
 * Make a decent CSS for the demo

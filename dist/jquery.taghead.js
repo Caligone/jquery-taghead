@@ -15,13 +15,13 @@
       },
       allowDuplicates: false,
       style: {
-        wrapperClass: 'taghead-wrapper',
-        tagClass: 'taghead-tag',
-        tagListWrapperClass: 'taghead-tag-list-wrapper',
-        tagListClass: 'taghead-tag-list',
-        tagListItemClass: 'taghead-tag-list-item',
-        inputClass: 'taghead-input',
-        removeClass: 'taghead-remove'
+        wrapperClass: '',
+        tagClass: '',
+        tagListWrapperClass: '',
+        tagListClass: '',
+        tagListItemClass: '',
+        inputClass: '',
+        removeClass: ''
       },
       text: {
         phAddTag: 'Add a tag'
@@ -30,21 +30,22 @@
     Plugin = (function() {
       function Plugin(element, options) {
         this.element = element;
-        this.settings = $.extend({}, defaults, options);
+        this.settings = $.extend(true, defaults, options);
         this._defaults = defaults;
         this._name = pluginName;
         this.tags = [];
         this.ids = [];
         this.init();
+        console.log(this.settings);
       }
 
       Plugin.prototype.init = function() {
-        $(this.element).wrap("<span class='" + this.settings.style.wrapperClass + "' id='taghead-wrapper'></span>");
-        this.wrapper = $('#taghead-wrapper')[0];
-        $(this.wrapper).append("<input type='text' class='" + this.settings.style.inputClass + "' id='taghead-input' placeholder='" + this.settings.text.phAddTag + "'/>");
-        this.input = $('#taghead-input')[0];
-        $(this.wrapper).append("<span class='" + this.settings.style.tagListWrapperClass + "' id='taghead-tag-list-wrapper'><ul class='" + this.settings.style.tagListClass + "' id='taghead-tag-list'></ul></span>");
-        this.list = $('#taghead-tag-list')[0];
+        $(this.element).wrap("<span class='taghead-wrapper " + this.settings.style.wrapperClass + "'></span>");
+        this.wrapper = $(this.element).parent()[0];
+        $(this.wrapper).append("<input type='text' class='taghead-input " + this.settings.style.inputClass + "' placeholder='" + this.settings.text.phAddTag + "'/>");
+        this.input = $(this.wrapper).find('.taghead-input')[0];
+        $(this.wrapper).append("<span class='taghead-tag-list-wrapper " + this.settings.style.tagListWrapperClass + "'><ul class='taghead-tag-list " + this.settings.style.tagListClass + "'></ul></span>");
+        this.list = $(this.wrapper).find('.taghead-tag-list')[0];
         $(this.element).hide();
         $(this.input).on('keyup', (function(_this) {
           return function(event) {
@@ -76,21 +77,21 @@
                 _results = [];
                 for (_i = 0, _len = data.length; _i < _len; _i++) {
                   e = data[_i];
-                  _results.push($(_this.list).append("<li><a href='#' data-id='" + e[_this.settings.remote.storeData] + "' class='" + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a></li>"));
+                  _results.push($(_this.list).append("<li><a href='#' data-id='" + e[_this.settings.remote.storeData] + "' class='taghead-tag-list-item " + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a></li>"));
                 }
                 return _results;
               });
             }
           };
         })(this));
-        $(document).on('click', "a." + this.settings.style.removeClass, (function(_this) {
+        $(this.wrapper).on('click', "a.taghead-remove", (function(_this) {
           return function(event) {
             var label;
             label = $(event.target).parent().text().slice(0, -1);
             return _this.removeTag(label);
           };
         })(this));
-        return $(document).on('click', "a." + this.settings.style.tagListItemClass, (function(_this) {
+        return $(this.wrapper).on('click', "a.taghead-tag-list-item", (function(_this) {
           return function(event) {
             return _this.addTag($(event.target).text(), $(event.target).attr('data-id'));
           };
@@ -101,7 +102,7 @@
         if (!this.settings.allowDuplicates && (this.tags.indexOf(label) > -1 || this.ids.indexOf(id) > -1)) {
           return;
         }
-        $(this.wrapper).append("<span class='" + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + ">" + label + "<a href='#' class='" + this.settings.style.removeClass + "'>X</a></span>");
+        $(this.wrapper).append("<span class='taghead-tag " + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + ">" + label + "<a href='#' class='taghead-remove " + this.settings.style.removeClass + "'>X</a></span>");
         this.tags.push(label);
         this.ids.push(id);
         return $(this.element).val(this.ids.join(','));
@@ -120,7 +121,7 @@
         } else {
           return;
         }
-        parent = $("." + this.settings.style.tagClass + "[data-label='" + label + "']");
+        parent = $(this.wrapper).find(".taghead-tag[data-label='" + label + "']");
         if (parent.hasClass(this.settings.style.tagClass)) {
           parent.remove();
         } else {

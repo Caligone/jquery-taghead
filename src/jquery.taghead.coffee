@@ -14,35 +14,40 @@ do ($ = jQuery, window, document) ->
 			forceValid: false		# The tag has to come from the source
 		allowDuplicates: false		# Allow dupplicates entry or not
 		style:
-			wrapperClass: 'taghead-wrapper'
-			tagClass: 'taghead-tag'
-			tagListWrapperClass: 'taghead-tag-list-wrapper'
-			tagListClass: 'taghead-tag-list'
-			tagListItemClass: 'taghead-tag-list-item'
-			inputClass: 'taghead-input'
-			removeClass: 'taghead-remove'
+			wrapperClass: ''
+			tagClass: ''
+			tagListWrapperClass: ''
+			tagListClass: ''
+			tagListItemClass: ''
+			inputClass: ''
+			removeClass: ''
 		text:
 			phAddTag: 'Add a tag'
 
 	class Plugin
 		constructor: (@element, options) ->
 			# Merge settings and set attributes
-			@settings = $.extend({}, defaults, options)
+			@settings = $.extend(true, defaults, options)
 			@_defaults = defaults
 			@_name = pluginName
 			@tags = []
 			@ids = []
 			@init()
+			console.log(@settings)
 
 		# Edit the DOM and Bind events
 		init: ->
 			# Edit the DOM
-			$(@element).wrap("<span class='#{@settings.style.wrapperClass}' id='taghead-wrapper'></span>")
-			@wrapper = $('#taghead-wrapper')[0]
-			$(@wrapper).append("<input type='text' class='#{@settings.style.inputClass}' id='taghead-input' placeholder='#{@settings.text.phAddTag}'/>")
-			@input = $('#taghead-input')[0]
-			$(@wrapper).append("<span class='#{@settings.style.tagListWrapperClass}' id='taghead-tag-list-wrapper'><ul class='#{@settings.style.tagListClass}' id='taghead-tag-list'></ul></span>")
-			@list = $('#taghead-tag-list')[0]	
+			# Create and save the taggead-wrapper
+			$(@element).wrap("<span class='taghead-wrapper #{@settings.style.wrapperClass}'></span>")
+			@wrapper = $(@element).parent()[0]
+			# Create and save the taggead-input
+			$(@wrapper).append("<input type='text' class='taghead-input #{@settings.style.inputClass}' placeholder='#{@settings.text.phAddTag}'/>")
+			@input = $(@wrapper).find('.taghead-input')[0]
+			# Create and save the taggead-tag-list-wrapper
+			$(@wrapper).append("<span class='taghead-tag-list-wrapper #{@settings.style.tagListWrapperClass}'><ul class='taghead-tag-list #{@settings.style.tagListClass}'></ul></span>")
+			@list = $(@wrapper).find('.taghead-tag-list')[0]	
+			
 			$(@element).hide()
 
 			# Keydown event
@@ -75,19 +80,19 @@ do ($ = jQuery, window, document) ->
 					.done((data) =>
 						# Empty the list and display the result
 						$(@list).empty()
-						$(@list).append("<li><a href='#' data-id='#{e[@settings.remote.storeData]}' class='#{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a></li>") for e in data
+						$(@list).append("<li><a href='#' data-id='#{e[@settings.remote.storeData]}' class='taghead-tag-list-item #{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a></li>") for e in data
 					)
 			)
 
 			# Remove tag event
-			$(document).on('click', "a.#{@settings.style.removeClass}", (event) =>
+			$(@wrapper).on('click', "a.taghead-remove", (event) =>
 				# Get the tag label
 				label = $(event.target).parent().text().slice(0, -1)
 				@removeTag(label)
 			)
 
 			# Validate a tag
-			$(document).on('click', "a.#{@settings.style.tagListItemClass}", (event) =>
+			$(@wrapper).on('click', "a.taghead-tag-list-item", (event) =>
 				@addTag($(event.target).text(), $(event.target).attr('data-id'))
 			)
 
@@ -98,7 +103,7 @@ do ($ = jQuery, window, document) ->
 				return
 
 			# Create the DOM element
-			$(@wrapper).append("<span class='#{@settings.style.tagClass}' data-label='#{label}' data-id=#{id}>#{label}<a href='#' class='#{@settings.style.removeClass}'>X</a></span>")
+			$(@wrapper).append("<span class='taghead-tag #{@settings.style.tagClass}' data-label='#{label}' data-id=#{id}>#{label}<a href='#' class='taghead-remove #{@settings.style.removeClass}'>X</a></span>")
 			
 			@tags.push(label)
 			@ids.push(id)
@@ -121,7 +126,7 @@ do ($ = jQuery, window, document) ->
 			else
 				return
 			# Look for the parent element				
-			parent = $(".#{@settings.style.tagClass}[data-label='#{label}']");
+			parent = $(@wrapper).find(".taghead-tag[data-label='#{label}']");
 
 			# Remove the tag (DOM element)
 			if(parent.hasClass(@settings.style.tagClass))

@@ -4,7 +4,7 @@
 		<title>jQuery TagHead</title>
 
 		<style>
-			#taghead-wrapper {
+			.taghead-wrapper {
 				-webkit-appearance: textfield;
 				background-color: white;
 				border: 2px inset;
@@ -30,7 +30,7 @@
 				height: 15px;
 				width: 100%;
 			}
-			#taghead-input, #taghead-input:hover, #taghead-input:focus {
+			.taghead-input, .taghead-input:hover, .taghead-input:focus {
 				border: none;
 				box-shadow: none;
 				outline: none;
@@ -72,12 +72,9 @@
 											remote: {	
 														source: "data.json",
 														enable: true,
-														sentParam: 'value',
 														displayData: 'name',
 														storeData: 'id',
-														saveData: 'id',
-														minLength: 2,
-														forceValid: false
+														saveData: 'id'
 													}
 										});
 			});

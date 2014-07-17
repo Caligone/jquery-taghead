@@ -80,6 +80,7 @@
 ### ToDo List
 
 * Default value
+* Custom events
 * Write a nice documentation
 * Unit testing
 * Make a decent CSS for the demo

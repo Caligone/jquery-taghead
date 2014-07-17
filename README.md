@@ -1,12 +1,22 @@
 # jQuery TagHead
 
-###### A *magic* mix between a input tag system, and a typehead engine.
+###### A *magical* mix between an input tag system, and a typahead engine.
 
 ### Usage
 
 #### Basic
 ```html
 <input type="text" id="myInput">
+<script>
+  $(function() {
+    $("#myInput").taghead();
+  });
+</script>
+```
+
+#### Default value
+```html
+<input type="text" id="myInput" value="1,2,3" data-tags="Label 1,Label 2,Label 3">
 <script>
   $(function() {
     $("#myInput").taghead();
@@ -22,14 +32,14 @@
 <script>
   $(function() {
     $("#myInput").taghead({	
-											      remote: {
-														    enable: true,
-														    source: "data.json",
-														    displayData: 'name',
-														    storeData: 'id',
-														    saveData: 'id'
-													  }
-										}));
+    				remote: {
+					enable: true,
+					source: "data.json",
+					displayData: 'name',
+					storeData: 'id',
+					saveData: 'id'
+					}
+			});
   });
 </script>
 ```
@@ -42,16 +52,16 @@
 <script>
   $(function() {
     $("#myInput").taghead({	
-											      style: {
-														    wrapperClass: 'custom-wrapper',
-                                tagClass: 'custom-tag',
-                          			tagListWrapperClass: 'custom-tag-list-wrapper',
-                          			tagListClass: 'custom-tag-list-wrapper'
-                          			tagListItemClass: 'custom-tag-list-item'
-                          			inputClass: 'custom-input'
-                          			removeClass: 'custom-remove'
-													  }
-										}));
+    				style: {
+					wrapperClass: 'custom-wrapper',
+					tagClass: 'custom-tag',
+                  			tagListWrapperClass: 'custom-tag-list-wrapper',
+                  			tagListClass: 'custom-tag-list-wrapper'
+                  			tagListItemClass: 'custom-tag-list-item'
+                  			inputClass: 'custom-input'
+                  			removeClass: 'custom-remove'
+					}
+			});
   });
 </script>
 ```

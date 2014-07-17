@@ -32,7 +32,7 @@
 <script>
   $(function() {
     $("#myInput").taghead({	
-    				remote: {
+				remote: {
 					enable: true,
 					source: "data.json",
 					displayData: 'name',
@@ -52,14 +52,14 @@
 <script>
   $(function() {
     $("#myInput").taghead({	
-    				style: {
+				style: {
 					wrapperClass: 'custom-wrapper',
 					tagClass: 'custom-tag',
-                  			tagListWrapperClass: 'custom-tag-list-wrapper',
-                  			tagListClass: 'custom-tag-list-wrapper'
-                  			tagListItemClass: 'custom-tag-list-item'
-                  			inputClass: 'custom-input'
-                  			removeClass: 'custom-remove'
+					tagListWrapperClass: 'custom-tag-list-wrapper',
+					tagListClass: 'custom-tag-list-wrapper'
+					tagListItemClass: 'custom-tag-list-item'
+					inputClass: 'custom-input'
+					removeClass: 'custom-remove'
 					}
 			});
   });

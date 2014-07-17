@@ -14,6 +14,7 @@
 </script>
 ```
 
+
 #### Remote source
 
 ```html
@@ -32,6 +33,7 @@
   });
 </script>
 ```
+
 
 #### Custom CSS
 
@@ -53,6 +55,7 @@
   });
 </script>
 ```
+
 
 ### Configuration
 
@@ -77,10 +80,17 @@
 * `text`
   * `phAddTag: string`
 
+
+### Events
+
+* `taghead.remoteresponse`
+* `taghead.clicktoadd`
+* `taghead.addtag`
+* `taghead.removetag`
+
+
 ### ToDo List
 
-* Default value
-* Custom events
 * Write a nice documentation
 * Unit testing
 * Make a decent CSS for the demo

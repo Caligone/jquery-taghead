@@ -66,9 +66,10 @@
 	</head>
 	<body>
 		<input type="text" id="myInput">
+		<input type="text" id="mySecondInput" value="1,2,3" data-tags="Value 1,Value 2,Value 3">
 		<script>
 			$(function() {
-				$("#myInput").taghead(	{	
+				var x = $("#myInput").taghead(	{	
 											remote: {	
 														source: "data.json",
 														enable: true,
@@ -77,6 +78,18 @@
 														saveData: 'id'
 													}
 										});
+				var y =$("#mySecondInput").taghead(	{	
+											remote: {	
+														source: "x.json",
+														enable: true,
+														displayData: 'name',
+														storeData: 'id',
+														saveData: 'id'
+													}
+										});
+				$('#myInput').on('taghead.addtag', function(e) {
+					console.log('OK');
+				});
 			});
 		</script>
 	</body>

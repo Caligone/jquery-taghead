@@ -50,6 +50,20 @@ do ($ = jQuery, window, document) ->
 			$(@element).hide()
 			$(@list).hide()
 
+			# Init with the current values
+			if($(@element).val() != '')
+				# If @element has tags, use it as label
+				if($(@element).data('tags') && $(@element).data('tags') != '')
+					labels = $(@element).data('tags').split(',')
+					ids = $(@element).val().split(',')
+					for v, i in labels
+						@addTag(v, ids[i])
+
+				else
+					labels = $(@element).val().split(',')
+					for v in labels
+						@addTag(v, v)
+
 			# Keydown event
 			$(@input).on('keyup', (event) =>
 				# Detect Enter and validate
@@ -81,6 +95,7 @@ do ($ = jQuery, window, document) ->
 						$(@list).empty()
 						$(@list).append("<li><a href='#' data-id='#{e[@settings.remote.storeData]}' class='taghead-tag-list-item #{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a></li>") for e in da
 						$(@list).show()
+						$(@element).trigger('taghead.remoteresponse')
 					)
 			)
 
@@ -103,6 +118,7 @@ do ($ = jQuery, window, document) ->
 				$(@list).empty()
 				$(@list).hide()
 				$(@input).val('')
+				$(@element).trigger('taghead.clicktoadd')
 				event.preventDefault()
 			)
 
@@ -120,6 +136,7 @@ do ($ = jQuery, window, document) ->
 			
 			# Edit the initial input value
 			$(@element).val(@ids.join(','))
+			$(@element).trigger('taghead.addtag')
 
 		# Remove tag
 		removeTag: (label, id) ->
@@ -146,6 +163,7 @@ do ($ = jQuery, window, document) ->
 
 			# Edit the initial input value
 			$(@element).val(@ids.join(','))
+			$(@element).trigger('taghead.removetag')
 
 			
 	# Wrap the plugin

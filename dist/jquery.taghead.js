@@ -39,6 +39,7 @@
       }
 
       Plugin.prototype.init = function() {
+        var i, ids, labels, v, _i, _j, _len, _len1;
         $(this.element).wrap("<span class='taghead-wrapper " + this.settings.style.wrapperClass + "'></span>");
         this.wrapper = $(this.element).parent()[0];
         $(this.wrapper).append("<input type='text' class='taghead-input " + this.settings.style.inputClass + "' placeholder='" + this.settings.text.phAddTag + "'/>");
@@ -47,6 +48,22 @@
         this.list = $(this.wrapper).find('.taghead-tag-list')[0];
         $(this.element).hide();
         $(this.list).hide();
+        if ($(this.element).val() !== '') {
+          if ($(this.element).data('tags') && $(this.element).data('tags') !== '') {
+            labels = $(this.element).data('tags').split(',');
+            ids = $(this.element).val().split(',');
+            for (i = _i = 0, _len = labels.length; _i < _len; i = ++_i) {
+              v = labels[i];
+              this.addTag(v, ids[i]);
+            }
+          } else {
+            labels = $(this.element).val().split(',');
+            for (_j = 0, _len1 = labels.length; _j < _len1; _j++) {
+              v = labels[_j];
+              this.addTag(v, v);
+            }
+          }
+        }
         $(this.input).on('keyup', (function(_this) {
           return function(event) {
             var d;
@@ -70,13 +87,14 @@
                 url: _this.settings.remote.source,
                 data: d
               }).done(function(da) {
-                var e, _i, _len;
+                var e, _k, _len2;
                 $(_this.list).empty();
-                for (_i = 0, _len = da.length; _i < _len; _i++) {
-                  e = da[_i];
+                for (_k = 0, _len2 = da.length; _k < _len2; _k++) {
+                  e = da[_k];
                   $(_this.list).append("<li><a href='#' data-id='" + e[_this.settings.remote.storeData] + "' class='taghead-tag-list-item " + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a></li>");
                 }
-                return $(_this.list).show();
+                $(_this.list).show();
+                return $(_this.element).trigger('taghead.remoteresponse');
               });
             }
           };
@@ -102,6 +120,7 @@
             $(_this.list).empty();
             $(_this.list).hide();
             $(_this.input).val('');
+            $(_this.element).trigger('taghead.addbyclick');
             return event.preventDefault();
           };
         })(this));
@@ -114,7 +133,8 @@
         $(this.input).before("<span class='taghead-tag " + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + ">" + label + "<a href='#' class='taghead-remove " + this.settings.style.removeClass + "'>X</a></span>");
         this.tags.push(label);
         this.ids.push(id);
-        return $(this.element).val(this.ids.join(','));
+        $(this.element).val(this.ids.join(','));
+        return $(this.element).trigger('taghead.addtag');
       };
 
       Plugin.prototype.removeTag = function(label, id) {
@@ -136,7 +156,8 @@
         } else {
           return;
         }
-        return $(this.element).val(this.ids.join(','));
+        $(this.element).val(this.ids.join(','));
+        return $(this.element).trigger('taghead.removetag');
       };
 
       return Plugin;

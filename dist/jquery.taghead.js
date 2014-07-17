@@ -30,7 +30,7 @@
     Plugin = (function() {
       function Plugin(element, options) {
         this.element = element;
-        this.settings = $.extend(true, defaults, options);
+        this.settings = $.extend(true, this.settings, defaults, options);
         this._defaults = defaults;
         this._name = pluginName;
         this.tags = [];
@@ -49,7 +49,7 @@
         $(this.list).hide();
         $(this.input).on('keyup', (function(_this) {
           return function(event) {
-            var data;
+            var d;
             if (event.keyCode === 13) {
               if (_this.settings.remote.forceValid) {
                 return;
@@ -58,26 +58,22 @@
               $(_this.input).val('');
               $(_this.list).empty();
               $(_this.list).hide();
-            } else {
-              if (event.keyCode === 8 && $(_this.input).val() === '') {
-                _this.removeTag(_this.tags[_this.tags.length - 1]);
-              }
             }
             if ($(_this.input).val().length < _this.settings.remote.minLength) {
               return;
             }
             if (_this.settings.remote.enable) {
-              data = {};
-              data[_this.settings.remote.sentParam] = $(_this.input).val();
+              d = {};
+              d[_this.settings.remote.sentParam] = $(_this.input).val();
               return $.ajax({
                 type: _this.settings.remote.method,
                 url: _this.settings.remote.source,
-                data: data
-              }).done(function(data) {
+                data: d
+              }).done(function(da) {
                 var e, _i, _len;
                 $(_this.list).empty();
-                for (_i = 0, _len = data.length; _i < _len; _i++) {
-                  e = data[_i];
+                for (_i = 0, _len = da.length; _i < _len; _i++) {
+                  e = da[_i];
                   $(_this.list).append("<li><a href='#' data-id='" + e[_this.settings.remote.storeData] + "' class='taghead-tag-list-item " + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a></li>");
                 }
                 return $(_this.list).show();
@@ -85,11 +81,19 @@
             }
           };
         })(this));
+        $(this.input).on('keydown', (function(_this) {
+          return function(event) {
+            if (event.keyCode === 8 && $(_this.input).val().length === 0) {
+              return _this.removeTag(_this.tags[_this.tags.length - 1]);
+            }
+          };
+        })(this));
         $(this.wrapper).on('click', "a.taghead-remove", (function(_this) {
           return function(event) {
             var label;
             label = $(event.target).parent().text().slice(0, -1);
-            return _this.removeTag(label);
+            _this.removeTag(label);
+            return event.preventDefault();
           };
         })(this));
         return $(this.wrapper).on('click', "a.taghead-tag-list-item", (function(_this) {
@@ -97,7 +101,8 @@
             _this.addTag($(event.target).text(), $(event.target).attr('data-id'));
             $(_this.list).empty();
             $(_this.list).hide();
-            return $(_this.input).val('');
+            $(_this.input).val('');
+            return event.preventDefault();
           };
         })(this));
       };
@@ -139,8 +144,10 @@
     })();
     return $.fn[pluginName] = function(options) {
       return this.each(function() {
+        var opt;
         if (!$.data(this, "plugin_" + pluginName)) {
-          return $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+          opt = $.extend(true, defaults, options);
+          return $.data(this, "plugin_" + pluginName, new Plugin(this, opt));
         }
       });
     };

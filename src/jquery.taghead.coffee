@@ -27,7 +27,7 @@ do ($ = jQuery, window, document) ->
 	class Plugin
 		constructor: (@element, options) ->
 			# Merge settings and set attributes
-			@settings = $.extend(true, defaults, options)
+			@settings = $.extend(true, @settings, defaults, options)
 			@_defaults = defaults
 			@_name = pluginName
 			@tags = []
@@ -62,9 +62,6 @@ do ($ = jQuery, window, document) ->
 					$(@input).val('')
 					$(@list).empty()
 					$(@list).hide()
-				else 
-					if(event.keyCode == 8 && $(@input).val() == '')
-						@removeTag(@tags[@tags.length-1])
 
 				# Check the length of the input value
 				if($(@input).val().length < @settings.remote.minLength)
@@ -72,19 +69,24 @@ do ($ = jQuery, window, document) ->
 
 				# If remote enable, send a XHR request
 				if(@settings.remote.enable)
-					data = {}
-					data[@settings.remote.sentParam] = $(@input).val()
+					d = {}
+					d[@settings.remote.sentParam] = $(@input).val()
 					$.ajax({
 						type: @settings.remote.method
 						url: @settings.remote.source
-						data: data
+						data: d
 					})
-					.done((data) =>
+					.done((da) =>
 						# Empty the list and display the result
 						$(@list).empty()
-						$(@list).append("<li><a href='#' data-id='#{e[@settings.remote.storeData]}' class='taghead-tag-list-item #{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a></li>") for e in data
+						$(@list).append("<li><a href='#' data-id='#{e[@settings.remote.storeData]}' class='taghead-tag-list-item #{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a></li>") for e in da
 						$(@list).show()
 					)
+			)
+
+			$(@input).on('keydown', (event) =>
+				if(event.keyCode == 8 && $(@input).val().length == 0)
+					@removeTag(@tags[@tags.length-1])
 			)
 
 			# Remove tag event
@@ -92,6 +94,7 @@ do ($ = jQuery, window, document) ->
 				# Get the tag label
 				label = $(event.target).parent().text().slice(0, -1)
 				@removeTag(label)
+				event.preventDefault()
 			)
 
 			# Validate a tag
@@ -100,6 +103,7 @@ do ($ = jQuery, window, document) ->
 				$(@list).empty()
 				$(@list).hide()
 				$(@input).val('')
+				event.preventDefault()
 			)
 
 
@@ -148,4 +152,5 @@ do ($ = jQuery, window, document) ->
 	$.fn[pluginName] = (options) ->
 		@each ->
 			unless $.data(@, "plugin_#{pluginName}")
-				$.data(@, "plugin_#{pluginName}", new Plugin @, options)
+				opt = $.extend(true, defaults, options)
+				$.data(@, "plugin_#{pluginName}", new Plugin @, opt)

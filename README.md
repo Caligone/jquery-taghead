@@ -16,13 +16,66 @@
 
 #### Remote source
 
-*ToDo*
-
+```html
+<input type="text" id="myInput">
+<script>
+  $(function() {
+    $("#myInput").taghead({	
+											      remote: {
+														    enable: true,
+														    source: "data.json",
+														    displayData: 'name',
+														    storeData: 'id',
+														    saveData: 'id'
+													  }
+										}));
+  });
+</script>
+```
 
 #### Custom CSS
 
-*ToDo*
+```html
+<input type="text" id="myInput">
+<script>
+  $(function() {
+    $("#myInput").taghead({	
+											      style: {
+														    wrapperClass: 'custom-wrapper',
+                                tagClass: 'custom-tag',
+                          			tagListWrapperClass: 'custom-tag-list-wrapper',
+                          			tagListClass: 'custom-tag-list-wrapper'
+                          			tagListItemClass: 'custom-tag-list-item'
+                          			inputClass: 'custom-input'
+                          			removeClass: 'custom-remove'
+													  }
+										}));
+  });
+</script>
+```
 
+### Configuration
+
+* `remote`
+  * `enable: boolean`
+  * `source: string`
+  * `method: 'GET' or 'POST'`
+  * `sentParam: string`
+  * `displayData: string`
+  * `storeData: string`
+  * `minLength: number`
+  * `forceValid: boolean`
+* `allowDuplicates: boolean`
+* `style`
+  * `wrapperClass: string`
+  * `tagClass: string`
+  * `tagListWrapperClass: string`
+  * `tagListClass: string`
+  * `tagListItemClass: string`
+  * `inputClass: string`
+  * `removeClass: string`
+* `text`
+  * `phAddTag: string`
 
 ### ToDo List
 

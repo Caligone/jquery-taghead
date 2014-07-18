@@ -69,15 +69,28 @@
           return function(event) {
             var d;
             if (event.keyCode === 13) {
-              if (_this.settings.remote.forceValid) {
-                return;
+              if (_this.wrapper.find('.th-active').length > 0) {
+                _this.addTag(_this.wrapper.find('.th-active').text(), _this.wrapper.find('.th-active').data('id'));
+              } else {
+                if (_this.settings.remote.forceValid) {
+                  return;
+                }
+                _this.addTag(_this.input.val(), _this.input.val());
               }
-              _this.addTag(_this.input.val(), _this.input.val());
               _this.input.val('');
               _this.list.empty();
               _this.list.hide();
             }
-            if (_this.input.val().length < _this.settings.remote.minLength) {
+            if (event.keyCode === 38) {
+              _this._keyboard(true);
+              return;
+            }
+            if (event.keyCode === 40) {
+              _this._keyboard(false);
+              return;
+            }
+            if (_this.input.val().length < _this.settings.remote.minLength || event.keyCode === 27) {
+              _this.list.empty();
               _this.list.hide();
               return;
             }
@@ -166,6 +179,28 @@
         }
         this.element.val(this.ids.join(','));
         return this.element.trigger('th.removetag');
+      };
+
+      Plugin.prototype._keyboard = function(up) {
+        var el;
+        if (this.input.val().length < this.settings.remote.minLength) {
+          return;
+        }
+        if (this.wrapper.find('.th-active').length > 0) {
+          el = this.wrapper.find('.th-active');
+          if (up) {
+            this.wrapper.find('.th-active').prev().addClass('th-active');
+          } else {
+            this.wrapper.find('.th-active').next().addClass('th-active');
+          }
+          return el.removeClass('th-active');
+        } else {
+          if (up) {
+            return this.wrapper.find('.th-tag-list-item').last().addClass('th-active');
+          } else {
+            return this.wrapper.find('.th-tag-list-item').first().addClass('th-active');
+          }
+        }
       };
 
       return Plugin;

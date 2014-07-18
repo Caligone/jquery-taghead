@@ -67,19 +67,31 @@ do ($ = jQuery, window, document) ->
 
 			# Keydown event
 			@input.on('keyup', (event) =>
+
 				# Detect Enter and validate
 				if(event.keyCode == 13)
-					# If the validation is forced, we can't validate with enter
-					if(@settings.remote.forceValid)
-						return
-
-					@addTag(@input.val(), @input.val())
+					if(@wrapper.find('.th-active').length > 0)
+						@addTag(@wrapper.find('.th-active').text(), @wrapper.find('.th-active').data('id'))
+					else
+						# If the validation is forced, we can't validate with enter
+						if(@settings.remote.forceValid)
+							return
+						@addTag(@input.val(), @input.val())
 					@input.val('')
 					@list.empty()
 					@list.hide()
+				
+				# Up and Down event
+				if(event.keyCode == 38) # up
+					@_keyboard(true)
+					return
+				if(event.keyCode == 40) # down
+					@_keyboard(false)
+					return
 
 				# Check the length of the input value
-				if(@input.val().length < @settings.remote.minLength)
+				if(@input.val().length < @settings.remote.minLength || event.keyCode == 27)
+					@list.empty()
 					@list.hide()
 					return
 
@@ -175,6 +187,23 @@ do ($ = jQuery, window, document) ->
 			@element.val(@ids.join(','))
 			@element.trigger('th.removetag')
 
+		# Keyboard Up/Down event
+		_keyboard: (up) ->
+			if(@input.val().length < @settings.remote.minLength)
+				return
+
+			if(@wrapper.find('.th-active').length > 0)
+				el = @wrapper.find('.th-active')
+				if(up)
+					@wrapper.find('.th-active').prev().addClass('th-active')
+				else
+					@wrapper.find('.th-active').next().addClass('th-active')
+				el.removeClass('th-active')
+			else
+				if(up)
+					@wrapper.find('.th-tag-list-item').last().addClass('th-active')
+				else
+					@wrapper.find('.th-tag-list-item').first().addClass('th-active')
 			
 	# Wrap the plugin
 	$.fn[pluginName] = (options) ->

@@ -101,6 +101,7 @@
 
 ### ToDo List
 
+* Shorted the taghead-* classes
 * Remove by clicking on a tag
 * Keyboard events
 * Write a nice documentation

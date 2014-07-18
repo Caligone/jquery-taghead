@@ -1,11 +1,11 @@
 {
 	"name": "jquery-taghead",
-	"version": "0.1.0",
+	"version": "0.4.0",
 	"authors": [
 		"Caligone <caligone@gmx.fr>"
 	],
-	"description": "A jQuery plugin to mix typhead and tags",
-	"main": "src/jquery.jquery-taghead.js",
+	"description": "A magical mix between an input tag system, and a typahead engine.",
+	"main": "dist/jquery.taghead.js",
 	"keywords": [
 		"jquery",
 		"plugin",

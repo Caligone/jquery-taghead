@@ -101,8 +101,11 @@
 
 ### ToDo List
 
+* Shorted the taghead-* classes
+* Remove by clicking on a tag
+* Keyboard events
 * Write a nice documentation
 * Unit testing
-* Make a decent CSS for the demo
+* Make a real demo
 
 *To be continued...*

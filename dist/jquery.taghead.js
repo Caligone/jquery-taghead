@@ -20,8 +20,7 @@
         tagListWrapperClass: '',
         tagListClass: '',
         tagListItemClass: '',
-        inputClass: '',
-        removeClass: ''
+        inputClass: ''
       },
       text: {
         phAddTag: 'Add a tag'
@@ -41,13 +40,13 @@
 
       Plugin.prototype.init = function() {
         var i, ids, labels, v, _i, _j, _len, _len1;
-        this.element.addClass('taghead-original-input');
-        this.element.wrap("<span class='taghead-wrapper " + this.settings.style.wrapperClass + "'></span>");
+        this.element.addClass('th-original-input');
+        this.element.wrap("<span class='th-wrapper " + this.settings.style.wrapperClass + "'></span>");
         this.wrapper = this.element.parent();
-        this.wrapper.append("<input type='text' class='taghead-input " + this.settings.style.inputClass + "' placeholder='" + this.settings.text.phAddTag + "' autocomplete='off' spellcheck='false' dir='auto'/>");
-        this.input = this.wrapper.find('.taghead-input');
-        this.wrapper.append("<div class='taghead-tag-list-wrapper " + this.settings.style.tagListWrapperClass + "'><span class='taghead-tag-list " + this.settings.style.tagListClass + "'></span></div>");
-        this.list = this.wrapper.find('.taghead-tag-list');
+        this.wrapper.append("<input type='text' class='th-input " + this.settings.style.inputClass + "' placeholder='" + this.settings.text.phAddTag + "' autocomplete='off' spellcheck='false' dir='auto'/>");
+        this.input = this.wrapper.find('.th-input');
+        this.wrapper.append("<div class='th-tag-list-wrapper " + this.settings.style.tagListWrapperClass + "'><span class='th-tag-list " + this.settings.style.tagListClass + "'></span></div>");
+        this.list = this.wrapper.find('.th-tag-list');
         this.list.hide();
         this.element.hide();
         if (this.element.val() !== '') {
@@ -94,10 +93,10 @@
                 _this.list.empty();
                 for (_k = 0, _len2 = da.length; _k < _len2; _k++) {
                   e = da[_k];
-                  _this.list.append("<a data-id='" + e[_this.settings.remote.storeData] + "' class='taghead-tag-list-item " + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a>");
+                  _this.list.append("<a data-id='" + e[_this.settings.remote.storeData] + "' class='th-tag-list-item " + _this.settings.style.tagListItemClass + "'>" + e[_this.settings.remote.displayData] + "</a>");
                 }
                 _this.list.show();
-                return _this.element.trigger('taghead.remoteresponse');
+                return _this.element.trigger('th.remoteresponse');
               });
             }
           };
@@ -109,29 +108,29 @@
             }
           };
         })(this));
-        this.wrapper.on('click', "a.taghead-remove", (function(_this) {
+        this.wrapper.on('click', "a.th-tag-link", (function(_this) {
           return function(event) {
             var label;
-            label = $(event.target).parent().text().slice(0, -1);
+            label = $(event.target).text();
             _this.removeTag(label);
             return event.preventDefault();
           };
         })(this));
-        this.wrapper.on('click', "a.taghead-tag-list-item", (function(_this) {
+        this.wrapper.on('click', "a.th-tag-list-item", (function(_this) {
           return function(event) {
             _this.addTag($(event.target).text(), $(event.target).attr('data-id'));
             _this.list.empty();
             _this.list.hide();
             _this.input.val('');
-            _this.element.trigger('taghead.clicktoadd');
+            _this.element.trigger('th.clicktoadd');
             return event.preventDefault();
           };
         })(this));
-        this.wrapper.on('mouseenter', "a.taghead-tag-list-item", function(event) {
-          return $(this).addClass('taghead-active');
+        this.wrapper.on('mouseenter', "a.th-tag-list-item", function(event) {
+          return $(this).addClass('th-active');
         });
-        return this.wrapper.on('mouseleave', "a.taghead-tag-list-item", function(event) {
-          return $(this).removeClass('taghead-active');
+        return this.wrapper.on('mouseleave', "a.th-tag-list-item", function(event) {
+          return $(this).removeClass('th-active');
         });
       };
 
@@ -139,11 +138,11 @@
         if (!this.settings.allowDuplicates && (this.tags.indexOf(label) > -1 || this.ids.indexOf(id) > -1)) {
           return;
         }
-        this.input.before("<span class='taghead-tag " + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + ">" + label + "<a href='#' class='taghead-remove " + this.settings.style.removeClass + "'>X</a></span>");
+        this.input.before("<span class='th-tag " + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + "><a href='#' class='th-tag-link'>" + label + "</a></span>");
         this.tags.push(label);
         this.ids.push(id);
         this.element.val(this.ids.join(','));
-        return this.element.trigger('taghead.addtag');
+        return this.element.trigger('th.addtag');
       };
 
       Plugin.prototype.removeTag = function(label, id) {
@@ -159,14 +158,14 @@
         } else {
           return;
         }
-        parent = this.wrapper.find(".taghead-tag[data-label='" + label + "']");
+        parent = this.wrapper.find(".th-tag[data-label='" + label + "']");
         if (parent.hasClass(this.settings.style.tagClass)) {
           parent.remove();
         } else {
           return;
         }
         this.element.val(this.ids.join(','));
-        return this.element.trigger('taghead.removetag');
+        return this.element.trigger('th.removetag');
       };
 
       return Plugin;

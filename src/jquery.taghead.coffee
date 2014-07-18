@@ -20,7 +20,6 @@ do ($ = jQuery, window, document) ->
 			tagListClass: ''
 			tagListItemClass: ''
 			inputClass: ''
-			removeClass: ''
 		text:
 			phAddTag: 'Add a tag'
 
@@ -38,16 +37,16 @@ do ($ = jQuery, window, document) ->
 		# Edit the DOM and Bind events
 		init: ->
 			# Edit the DOM
-			@element.addClass('taghead-original-input')
+			@element.addClass('th-original-input')
 			# Create and save the taggead-wrapper
-			@element.wrap("<span class='taghead-wrapper #{@settings.style.wrapperClass}'></span>")
+			@element.wrap("<span class='th-wrapper #{@settings.style.wrapperClass}'></span>")
 			@wrapper = @element.parent()
 			# Create and save the taggead-input
-			@wrapper.append("<input type='text' class='taghead-input #{@settings.style.inputClass}' placeholder='#{@settings.text.phAddTag}' autocomplete='off' spellcheck='false' dir='auto'/>")
-			@input = @wrapper.find('.taghead-input')
+			@wrapper.append("<input type='text' class='th-input #{@settings.style.inputClass}' placeholder='#{@settings.text.phAddTag}' autocomplete='off' spellcheck='false' dir='auto'/>")
+			@input = @wrapper.find('.th-input')
 			# Create and save the taggead-tag-list-wrapper
-			@wrapper.append("<div class='taghead-tag-list-wrapper #{@settings.style.tagListWrapperClass}'><span class='taghead-tag-list #{@settings.style.tagListClass}'></span></div>")
-			@list = @wrapper.find('.taghead-tag-list')
+			@wrapper.append("<div class='th-tag-list-wrapper #{@settings.style.tagListWrapperClass}'><span class='th-tag-list #{@settings.style.tagListClass}'></span></div>")
+			@list = @wrapper.find('.th-tag-list')
 
 			@list.hide()
 			@element.hide()
@@ -96,9 +95,9 @@ do ($ = jQuery, window, document) ->
 					.done((da) =>
 						# Empty the list and display the result
 						@list.empty()
-						@list.append("<a data-id='#{e[@settings.remote.storeData]}' class='taghead-tag-list-item #{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a>") for e in da
+						@list.append("<a data-id='#{e[@settings.remote.storeData]}' class='th-tag-list-item #{@settings.style.tagListItemClass}'>#{e[@settings.remote.displayData]}</a>") for e in da
 						@list.show()
-						@element.trigger('taghead.remoteresponse')
+						@element.trigger('th.remoteresponse')
 					)
 			)
 
@@ -108,29 +107,29 @@ do ($ = jQuery, window, document) ->
 			)
 
 			# Remove tag event
-			@wrapper.on('click', "a.taghead-remove", (event) =>
+			@wrapper.on('click', "a.th-tag-link", (event) =>
 				# Get the tag label
-				label = $(event.target).parent().text().slice(0, -1)
+				label = $(event.target).text()
 				@removeTag(label)
 				event.preventDefault()
 			)
 
 			# Validate a tag
-			@wrapper.on('click', "a.taghead-tag-list-item", (event) =>
+			@wrapper.on('click', "a.th-tag-list-item", (event) =>
 				@addTag($(event.target).text(), $(event.target).attr('data-id'))
 				@list.empty()
 				@list.hide()
 				@input.val('')
-				@element.trigger('taghead.clicktoadd')
+				@element.trigger('th.clicktoadd')
 				event.preventDefault()
 			)
 
 			# Hover a tag
-			@wrapper.on('mouseenter', "a.taghead-tag-list-item", (event) ->
-				$(@).addClass('taghead-active')
+			@wrapper.on('mouseenter', "a.th-tag-list-item", (event) ->
+				$(@).addClass('th-active')
 			)
-			@wrapper.on('mouseleave', "a.taghead-tag-list-item", (event) ->
-				$(@).removeClass('taghead-active')
+			@wrapper.on('mouseleave', "a.th-tag-list-item", (event) ->
+				$(@).removeClass('th-active')
 			)
 
 
@@ -140,14 +139,14 @@ do ($ = jQuery, window, document) ->
 				return
 
 			# Create the DOM element
-			@input.before("<span class='taghead-tag #{@settings.style.tagClass}' data-label='#{label}' data-id=#{id}>#{label}<a href='#' class='taghead-remove #{@settings.style.removeClass}'>X</a></span>")
+			@input.before("<span class='th-tag #{@settings.style.tagClass}' data-label='#{label}' data-id=#{id}><a href='#' class='th-tag-link'>#{label}</a></span>")
 			
 			@tags.push(label)
 			@ids.push(id)
 			
 			# Edit the initial input value
 			@element.val(@ids.join(','))
-			@element.trigger('taghead.addtag')
+			@element.trigger('th.addtag')
 
 		# Remove tag
 		removeTag: (label, id) ->
@@ -164,7 +163,7 @@ do ($ = jQuery, window, document) ->
 			else
 				return
 			# Look for the parent element				
-			parent = @wrapper.find(".taghead-tag[data-label='#{label}']");
+			parent = @wrapper.find(".th-tag[data-label='#{label}']");
 
 			# Remove the tag (DOM element)
 			if(parent.hasClass(@settings.style.tagClass))
@@ -174,7 +173,7 @@ do ($ = jQuery, window, document) ->
 
 			# Edit the initial input value
 			@element.val(@ids.join(','))
-			@element.trigger('taghead.removetag')
+			@element.trigger('th.removetag')
 
 			
 	# Wrap the plugin

@@ -36,8 +36,7 @@
 					enable: true,
 					source: "data.json",
 					displayData: 'name',
-					storeData: 'id',
-					saveData: 'id'
+					storeData: 'id'
 					}
 			});
   });
@@ -56,10 +55,9 @@
 					wrapperClass: 'custom-wrapper',
 					tagClass: 'custom-tag',
 					tagListWrapperClass: 'custom-tag-list-wrapper',
-					tagListClass: 'custom-tag-list-wrapper'
-					tagListItemClass: 'custom-tag-list-item'
+					tagListClass: 'custom-tag-list-wrapper',
+					tagListItemClass: 'custom-tag-list-item',
 					inputClass: 'custom-input'
-					removeClass: 'custom-remove'
 					}
 			});
   });
@@ -86,26 +84,27 @@
   * `tagListClass: string`
   * `tagListItemClass: string`
   * `inputClass: string`
-  * `removeClass: string`
 * `text`
   * `phAddTag: string`
 
 
 ### Events
 
-* `taghead.remoteresponse`
-* `taghead.clicktoadd`
-* `taghead.addtag`
-* `taghead.removetag`
+* `th.remoteresponse`
+* `th.clicktoadd`
+* `th.addtag`
+* `th.removetag`
 
 
 ### ToDo List
 
-* Shorted the taghead-* classes
-* Remove by clicking on a tag
-* Keyboard events
 * Write a nice documentation
 * Unit testing
 * Make a real demo
 
 *To be continued...*
+
+### Thanks
+
+* [Flat-UI](http://designmodo.github.io/Flat-UI/)
+* [jQuery Boilerplate](http://jqueryboilerplate.com/)

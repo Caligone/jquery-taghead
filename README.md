@@ -1,4 +1,4 @@
-# jQuery TagHead v0.4.0
+# jQuery TagHead v0.5.0
 
 ###### A *magical* mix between an input tag system, and a typahead engine.
 
@@ -68,24 +68,31 @@
 ### Configuration
 
 * `remote`
-  * `enable: boolean`
-  * `source: string`
-  * `method: 'GET' or 'POST'`
-  * `sentParam: string`
-  * `displayData: string`
-  * `storeData: string`
-  * `minLength: number`
-  * `forceValid: boolean`
-* `allowDuplicates: boolean`
+  * `enable: boolean (default: false)`
+  * `source: string (default: '')`
+  * `method: 'GET' or 'POST' (default: 'GET')`
+  * `sentParam: string (default: 'value')`
+  * `displayData: string (default: 'value')`
+  * `storeData: string (default: 'value')`
+  * `minLength: number (default: 2)`
+  * `forceValid: boolean (default: false)`
+* `allowDuplicates: boolean (default: false)`
 * `style`
-  * `wrapperClass: string`
-  * `tagClass: string`
-  * `tagListWrapperClass: string`
-  * `tagListClass: string`
-  * `tagListItemClass: string`
-  * `inputClass: string`
+  * `wrapperClass: string (default: '')`
+  * `tagClass: string (default: '')`
+  * `tagListWrapperClass: string (default: '')`
+  * `tagListClass: string (default: '')`
+  * `tagListItemClass: string (default: '')`
+  * `inputClass: string (default: '')`
 * `text`
-  * `phAddTag: string`
+  * `phAddTag: string (default: 'Add a tag')`
+
+
+### Public methods
+
+* `addTag(label, id)`
+* `removeTag(label[, id])`
+* `clearTag()`
 
 
 ### Events

@@ -12,7 +12,7 @@
 		<input type="text" id="myInput" value="Value 1,Value 2,Value 3">
 		<script>
 			$(function() {
-				$("#myInput").taghead(	{	
+				var th = $("#myInput").taghead(	{	
 											remote: {	
 														source: "data.json",
 														enable: true,
@@ -21,6 +21,7 @@
 														saveData: 'id'
 													}
 										});
+				th.addTag('Value 4', 'ID 4');
 			});
 		</script>
 	</body>

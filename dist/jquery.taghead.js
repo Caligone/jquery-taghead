@@ -35,10 +35,10 @@
         this.tags = [];
         this.ids = [];
         this.element = $(this.element);
-        this.init();
+        this._init();
       }
 
-      Plugin.prototype.init = function() {
+      Plugin.prototype._init = function() {
         var i, ids, labels, v, _i, _j, _len, _len1;
         this.element.addClass('th-original-input');
         this.element.wrap("<span class='th-wrapper " + this.settings.style.wrapperClass + "'></span>");
@@ -181,6 +181,15 @@
         return this.element.trigger('th.removetag');
       };
 
+      Plugin.prototype.clearTag = function() {
+        var _results;
+        _results = [];
+        while (this.tags.length > 0) {
+          _results.push(this.removeTag(this.tags[0], this.ids[0]));
+        }
+        return _results;
+      };
+
       Plugin.prototype._keyboard = function(up) {
         var el;
         if (this.input.val().length < this.settings.remote.minLength) {
@@ -213,7 +222,7 @@
           opt = $.extend(true, defaults, options);
           return $.data(this, "plugin_" + pluginName, new Plugin(this, opt));
         }
-      });
+      }).data("plugin_" + pluginName);
     };
   })(jQuery, window, document);
 

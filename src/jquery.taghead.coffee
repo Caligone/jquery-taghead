@@ -32,10 +32,10 @@ do ($ = jQuery, window, document) ->
 			@tags = []
 			@ids = []
 			@element = $(@element)
-			@init()
+			@_init()
 
 		# Edit the DOM and Bind events
-		init: ->
+		_init: ->
 			# Edit the DOM
 			@element.addClass('th-original-input')
 			# Create and save the taggead-wrapper
@@ -174,6 +174,7 @@ do ($ = jQuery, window, document) ->
 				@ids.splice(index, 1)
 			else
 				return
+
 			# Look for the parent element				
 			parent = @wrapper.find(".th-tag[data-label='#{label}']");
 
@@ -186,6 +187,12 @@ do ($ = jQuery, window, document) ->
 			# Edit the initial input value
 			@element.val(@ids.join(','))
 			@element.trigger('th.removetag')
+
+
+		# Clear all the tag
+		clearTag: () ->
+			while(@tags.length > 0)
+				@removeTag(@tags[0], @ids[0])
 
 		# Keyboard Up/Down event
 		_keyboard: (up) ->
@@ -211,3 +218,4 @@ do ($ = jQuery, window, document) ->
 			unless $.data(@, "plugin_#{pluginName}")
 				opt = $.extend(true, defaults, options)
 				$.data(@, "plugin_#{pluginName}", new Plugin @, opt)
+		.data("plugin_#{pluginName}")

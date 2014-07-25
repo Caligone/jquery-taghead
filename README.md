@@ -1,4 +1,4 @@
-# jQuery TagHead v0.5.0
+# jQuery TagHead v0.5.1
 
 ###### A *magical* mix between an input tag system, and a typahead engine.
 

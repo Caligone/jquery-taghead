@@ -11,7 +11,8 @@
         displayData: 'value',
         storeData: 'value',
         minLength: 2,
-        forceValid: false
+        forceValid: false,
+        limit: -1
       },
       allowDuplicates: false,
       style: {
@@ -149,6 +150,9 @@
 
       Plugin.prototype.addTag = function(label, id) {
         if (!this.settings.allowDuplicates && (this.tags.indexOf(label) > -1 || this.ids.indexOf(id) > -1)) {
+          return;
+        }
+        if (this.settings.limit !== -1 && this.tags.length >= this.settings.limit) {
           return;
         }
         this.input.before("<span class='th-tag " + this.settings.style.tagClass + "' data-label='" + label + "' data-id=" + id + "><a href='#' class='th-tag-link'>" + label + "</a></span>");

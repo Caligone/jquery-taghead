@@ -12,6 +12,7 @@ do ($ = jQuery, window, document) ->
 			storeData: 'value'		# Set the name of the parameter used for value
 			minLength: 2			# Set the min length of the value for ajax calls
 			forceValid: false		# The tag has to come from the source
+		limit: -1					# The tag has to come from the source
 		allowDuplicates: false		# Allow dupplicates entry or not
 		style:
 			wrapperClass: ''
@@ -148,6 +149,9 @@ do ($ = jQuery, window, document) ->
 		# Add a tag
 		addTag: (label, id) ->
 			if(!@settings.allowDuplicates && (@tags.indexOf(label) > -1 || @ids.indexOf(id) > -1))
+				return
+
+			if(@settings.limit != -1 && @tags.length >= @settings.limit)
 				return
 
 			# Create the DOM element

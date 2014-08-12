@@ -1,4 +1,4 @@
-# jQuery TagHead v0.5.1
+# jQuery TagHead v0.5.2
 
 ###### A *magical* mix between an input tag system, and a typahead engine.
 
@@ -77,6 +77,7 @@
   * `minLength: number (default: 2)`
   * `forceValid: boolean (default: false)`
 * `allowDuplicates: boolean (default: false)`
+* `limit: integer (default: -1)`
 * `style`
   * `wrapperClass: string (default: '')`
   * `tagClass: string (default: '')`

@@ -9,7 +9,7 @@
 		<script src="../dist/jquery.taghead.js"></script>
 	</head>
 	<body>
-		<input type="text" id="myInput" value="Value 1,Value 2,Value 3">
+		<input type="text" id="myInput" value="Value 1,Value 2">
 		<script>
 			$(function() {
 				var th = $("#myInput").taghead(	{	
@@ -19,7 +19,8 @@
 														displayData: 'name',
 														storeData: 'id',
 														saveData: 'id'
-													}
+													},
+                                            limit: 3
 										});
 				th.addTag('Value 4', 'ID 4');
 			});

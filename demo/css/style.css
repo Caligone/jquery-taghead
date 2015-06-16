@@ -1,0 +1,99 @@
+body {
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+}
+
+.th-original-input {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-color: transparent;
+  box-shadow: none;
+  background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);
+}
+
+.th-wrapper  {
+  position: relative; 
+  display: inline-block;
+  background-color: transparent;
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-size: 15px;
+  -webkit-appearance: none;
+  border-radius: 6px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+  transition: border .25s linear, color .25s linear, background-color .25s linear;
+}
+
+.th-input {
+  position: relative;
+  vertical-align: top;
+  background-color: transparent;
+  color: #34495e;
+  font-size: 15px;
+  padding: 8px 12px;
+  -webkit-appearance: none;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+.th-input:focus {
+  border-color: #16a085;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.th-tag-list {
+  padding: 0px;
+  overflow: hidden;
+}
+
+.th-tag-list-item {
+  display: inline-block;
+  padding: 6px 14px;
+  width: 100%;
+}
+
+.th-tag-list-item {
+  cursor: pointer;
+  color: #16a085;
+  background-color: white;
+}
+
+.th-active {
+  color: white;
+  background-color: #16a085;
+}
+
+.th-tag-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  border: 2px solid #16a085;
+  border-radius: 6px;
+}
+
+.th-tag {
+  border: 2px solid #16a085;
+  border-radius: 6px;
+  color: #16a085;
+  background-color: white;
+  padding: 3px 6px;
+  margin: 0px 2px;
+  display: inline-block;
+  margin-top: 3px;
+}
+
+.th-tag-link {
+  text-decoration: none;
+  color: #16a085;
+}
+
+.th-tag-link:hover {
+  color: #1abc9c;
+}

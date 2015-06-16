@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery TagHead</title>
+
+		<link rel="stylesheet" href="demo/css/style.css">
+
+		<script src="demo/jquery.min.js"></script>
+		<script src="dist/jquery.taghead.js"></script>
+	</head>
+	<body>
+		<input type="text" id="myInput" value="Value 1">
+		<script>
+			$(function() {
+				var th = $("#myInput").taghead(	{	
+											remote: {	
+														source: "demo/data.json",
+														enable: true,
+														displayData: 'name',
+														storeData: 'id',
+														saveData: 'id'
+													},
+                                            limit: 3
+										});
+				th.addTag('Value 4', 'ID 4');
+			});
+		</script>
+	</body>
+</html>

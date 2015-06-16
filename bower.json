@@ -1,0 +1,20 @@
+{
+	"name": "jquery-taghead",
+	"version": "0.5.2",
+	"authors": [
+		"Caligone <caligone@gmx.fr>"
+	],
+	"ignore": [
+		"demo"
+	],
+	"description": "A magical mix between an input tag system, and a typahead engine.",
+	"main": "dist/jquery.taghead.js",
+	"keywords": [
+		"jquery",
+		"plugin",
+		"taghead",
+		"jquery-plugin",
+		"jquery-taghead"
+	],
+	"license": "MIT"
+}

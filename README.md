@@ -2,6 +2,9 @@
 
 ###### A *magical* mix between an input tag system, and a typahead engine.
 
+
+Here is a quick [demo](http://caligone.github.io/jquery-taghead/) ! Check the code
+
 ### Usage
 
 #### Basic
